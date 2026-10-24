@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>A living garden grew for you 🌸</title>
 <meta name="description" content="Someone planted something special for you.">
+<meta name="author" content="saklin_01">
 <meta property="og:title" content="A living garden grew for you 🌸">
 <meta property="og:description" content="A dense living meadow of blooming roses, tulips, sunflowers and wildflowers planted just for you.">
 <meta property="og:type" content="website">
@@ -146,9 +147,65 @@ html[data-theme="morning"] #vignette,html[data-theme="vintage"] #vignette{
 }
 #toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
 
+/* ============ TAGLINE / AUTHOR BADGE ============ */
+#author-tag{
+  position:absolute;
+  bottom:calc(20px + env(safe-area-inset-bottom));
+  right:24px;
+  z-index:45;
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 14px;
+  border-radius:999px;
+  font-family:var(--sans);
+  font-size:12.5px;
+  font-weight:500;
+  letter-spacing:0.03em;
+  color:var(--ink-dim);
+  text-decoration:none;
+  background:color-mix(in srgb, var(--panel) 82%, transparent);
+  border:1px solid var(--line);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
+  transition:all .32s var(--ease-out);
+  cursor:pointer;
+  user-select:none;
+}
+#author-tag:hover{
+  color:var(--ink);
+  border-color:var(--accent);
+  box-shadow:0 10px 28px rgba(0,0,0,0.4), 0 0 16px var(--glow);
+  transform:translateY(-2px);
+}
+#author-tag .tag-spark{
+  font-size:13px;
+  display:inline-block;
+  animation:tagSparkle 3s ease-in-out infinite;
+}
+@keyframes tagSparkle{
+  0%,100%{transform:scale(1) rotate(0deg); opacity:0.85}
+  50%{transform:scale(1.22) rotate(12deg); opacity:1}
+}
+#author-tag .tag-name{
+  font-family:var(--serif);
+  font-size:15px;
+  font-style:italic;
+  letter-spacing:0.04em;
+  color:var(--ink);
+}
+
+@media (max-width: 600px){
+  #author-tag{
+    right:16px;
+    bottom:calc(16px + env(safe-area-inset-bottom));
+    padding:5px 12px;
+  }
+}
 
 @media (prefers-reduced-motion:reduce){
-  #sky, .breathe, .sway, .leafSway{animation:none !important}
+  #sky, .breathe, .sway, .leafSway, #author-tag .tag-spark{animation:none !important}
   #camera{transition:none}
 }
 </style>
@@ -170,6 +227,11 @@ html[data-theme="morning"] #vignette,html[data-theme="vintage"] #vignette{
   <!-- Toast whisper -->
   <div id="toast" role="status"></div>
 
+  <!-- Tagline / Author Badge -->
+  <a id="author-tag" href="https://github.com/saklincodes" target="_blank" rel="noopener noreferrer" title="Cultivated by saklin_01">
+    <span class="tag-spark">🌸</span>
+    <span class="tag-name">saklin_01</span>
+  </a>
 
 </div>
 
@@ -179,6 +241,8 @@ html[data-theme="morning"] #vignette,html[data-theme="vintage"] #vignette{
 const CONFIG = {
   themes: ["midnight","morning","vintage","enchanted"],
   whispers: [
+    "cultivated with tenderness by saklin_01 🌸",
+    "saklin_01 planted this garden for you ✨",
     "you make everything bloom brighter ✨",
     "still choosing you, always 🌸",
     "one more reason I love you 💫",
@@ -215,7 +279,7 @@ function clean(v, fallback, max){
 }
 const PARAMS = {
   to: clean(qs.get("to"), "My Love", 24),
-  from: clean(qs.get("from"), "Alessio", 24),
+  from: clean(qs.get("from"), "saklin_01", 24),
   occasion: clean(qs.get("occasion"), "just because", 40).toLowerCase(),
   msg: clean(qs.get("msg"), "I couldn't give you flowers|that last forever,|so I grew you a meadow|that never wilts.", 140),
   style: CONFIG.themes.includes((qs.get("style")||"").toLowerCase()) ? qs.get("style").toLowerCase() : "midnight"
@@ -1209,6 +1273,17 @@ const unlockAudioOnGesture = () => {
 ["pointerdown", "touchstart", "keydown"].forEach(evt => {
   window.addEventListener(evt, unlockAudioOnGesture, { once: true, passive: true });
 });
+
+// Interactive author badge feedback
+const authorTag = document.getElementById("author-tag");
+if(authorTag){
+  authorTag.addEventListener("click", () => {
+    initAudio();
+    playTone(523.25, "sine", 0, 0.8, 0.08);
+    playTone(659.25, "sine", 0.08, 1.2, 0.06);
+    whisper("🌸 Cultivated with tender care by saklin_01", 3200);
+  });
+}
 
 // Automatically start blooming sequence directly on load
 window.addEventListener("DOMContentLoaded", () => {

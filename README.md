@@ -95,7 +95,7 @@ You can personalize the garden for friends or loved ones simply by passing URL p
 | Parameter | Type | Default | Description |
 |:---|:---|:---|:---|
 | `to` | `string` | `"My Love"` | Recipient's name displayed in the document title |
-| `from` | `string` | `"Alessio"` | Sender's name used for seeded layout hashing |
+| `from` | `string` | `"saklin_01"` | Sender's name used for seeded layout hashing |
 | `occasion` | `string` | `"just because"` | Occasion subtitle for the garden |
 | `style` | `string` | `"midnight"` | Color theme: `midnight`, `morning`, `vintage`, or `enchanted` |
 | `msg` | `string` | *See presets* | Pipe-delimited (`\|`) message lines |
@@ -168,5 +168,5 @@ This project is open source and distributed under the [MIT License](LICENSE). Fe
 ---
 
 <div align="center">
-  <sub>Crafted with tenderness and math by <a href="https://github.com/saklincodes">saklincodes</a>. If this project made you smile, feel free to give it a ⭐!</sub>
+  <sub>Crafted with tenderness and math by <strong>saklin_01</strong> (<a href="https://github.com/saklincodes">@saklincodes</a>). If this project made you smile, feel free to give it a ⭐!</sub>
 </div>
